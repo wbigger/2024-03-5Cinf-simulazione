@@ -1,9 +1,8 @@
 #!/bin/bash -xe
 sudo apt update -y
-sudo apt install nodejs unzip wget npm mysql-server -y
-wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-200-ACCAP1-1-DEV/code.zip -P /home/ubuntu
+sudo apt install nodejs unzip wget npm mysql-server git -y
 cd /home/ubuntu
-unzip code.zip -x "resources/codebase_partner/node_modules/*"
+git clone https://github.com/wbigger/2024-03-5Cinf-simulazione
 cd resources/codebase_partner
 npm install aws aws-sdk
 sudo mysql -u root -e "CREATE USER 'nodeapp' IDENTIFIED WITH mysql_native_password BY 'student12'";
@@ -26,6 +25,6 @@ export APP_PORT=8080
 sudo -E npm start &
 echo '#!/bin/bash -xe
 cd /home/ubuntu/resources/codebase_partner
-export APP_PORT=80
+export APP_PORT=8080
 npm start' | sudo tee /etc/rc.local
 sudo chmod +x /etc/rc.local
