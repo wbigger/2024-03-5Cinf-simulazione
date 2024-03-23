@@ -7,9 +7,9 @@ const {body, validationResult} = require("express-validator");
 exports.create = [
 
     // Validate and sanitize the name field.
-    body('name', 'The order name is required').trim().isLength({min: 1}).escape(),
-    body('description', 'The order description is required').trim().isLength({min: 1}).escape(),
-    body('price', 'The order price is required').trim().isLength({min: 1}).escape(),
+    body('name', 'The part name is required').trim().isLength({min: 1}).escape(),
+    body('description', 'The part description is required').trim().isLength({min: 1}).escape(),
+    body('price', 'The part price is required').trim().isLength({min: 1}).escape(),
 
     // Process request after validation and sanitization.
     (req, res, next) => {
@@ -27,7 +27,7 @@ exports.create = [
             // Data from form is valid., save to db
             Supplier.create(supplier, (err, data) => {
                 if (err)
-                    res.render("500", {message: `Error occurred while creating the Order.`});
+                    res.render("500", {message: `Error occurred while creating the Part.`});
                 else res.redirect("/orders");
             });
         }
@@ -37,7 +37,7 @@ exports.create = [
 exports.findAll = (req, res) => {
     Supplier.getAll((err, data) => {
         if (err)
-            res.render("500", {message: "The was a problem retrieving the list of orders"});
+            res.render("500", {message: "The was a problem retrieving the list of parts"});
         else res.render("supplier-list-all", {orders: data});
     });
 };
@@ -47,10 +47,10 @@ exports.findOne = (req, res) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Order with id ${req.params.id}.`
+                    message: `Not found Part with id ${req.params.id}.`
                 });
             } else {
-                res.render("500", {message: `Error retrieving order with id ${req.params.id}`});
+                res.render("500", {message: `Error retrieving part with id ${req.params.id}`});
             }
         } else res.render("supplier-update", {supplier: data});
     });
@@ -60,9 +60,9 @@ exports.findOne = (req, res) => {
 exports.update = [
 
     // Validate and sanitize the name field.
-    body('name', 'The order name is required').trim().isLength({min: 1}).escape(),
-    body('description', 'The order description is required').trim().isLength({min: 1}).escape(),
-    body('price', 'The order price is required').trim().isLength({min: 1}).escape(),
+    body('name', 'The part name is required').trim().isLength({min: 1}).escape(),
+    body('description', 'The part description is required').trim().isLength({min: 1}).escape(),
+    body('price', 'The part price is required').trim().isLength({min: 1}).escape(),
 
     // Process request after validation and sanitization.
     (req, res, next) => {
@@ -86,10 +86,10 @@ exports.update = [
                     if (err) {
                         if (err.kind === "not_found") {
                             res.status(404).send({
-                                message: `Order with id ${req.body.id} Not found.`
+                                message: `Part with id ${req.body.id} Not found.`
                             });
                         } else {
-                            res.render("500", {message: `Error updating Order with id ${req.body.id}`});
+                            res.render("500", {message: `Error updating Part with id ${req.body.id}`});
                         }
                     } else res.redirect("/orders");
                 }
@@ -103,10 +103,10 @@ exports.remove = (req, res) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Order with id ${req.params.id}.`
+                    message: `Not found Part with id ${req.params.id}.`
                 });
             } else {
-                res.render("500", {message: `Could not delete Order with id ${req.body.id}`});
+                res.render("500", {message: `Could not delete Part with id ${req.body.id}`});
             }
         } else res.redirect("/orders");
     });
@@ -115,7 +115,7 @@ exports.remove = (req, res) => {
 exports.removeAll = (req, res) => {
     Supplier.removeAll((err, data) => {
         if (err)
-            res.render("500", {message: `Some error occurred while removing all orders.`});
-        else res.send({message: `All orders were deleted successfully!`});
+            res.render("500", {message: `Some error occurred while removing all parts.`});
+        else res.send({message: `All parts were deleted successfully!`});
     });
 };

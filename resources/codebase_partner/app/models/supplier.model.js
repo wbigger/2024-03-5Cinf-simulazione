@@ -47,7 +47,7 @@ Supplier.getAll = result => {
             result(err, null);
             return;
         }
-        console.log("Orders: ", res);
+        console.log("Parts: ", res);
         result(null, res);
     });
 };
@@ -102,7 +102,7 @@ Supplier.delete = (id, result) => {
             result({kind: "not_found"}, null);
             return;
         }
-        console.log("deleted order with id: ", id);
+        console.log("deleted part with id: ", id);
         result(null, res);
     });
 };
